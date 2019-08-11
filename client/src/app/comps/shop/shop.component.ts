@@ -9,7 +9,10 @@ import { ShopService } from 'src/app/services/shop.service';
 export class ShopComponent implements OnInit {
 
   constructor(private shopService: ShopService) { }
-
+  
+  amountOfInspected:number=0;
+  inspectedProduct: any;
+  currentlyAdding: boolean = false;
   searchProduct: string;
   allCategories: any;
   allProducts: any;
@@ -23,11 +26,15 @@ export class ShopComponent implements OnInit {
 
     this.shopService.getProducts().subscribe(product => {
       this.allProducts = product.filter(prod => prod.title.toLowerCase().includes(this.searchProduct.toLowerCase()))
-    debugger;
-    }
-    )
+    })
   }
 
+  addProduct(prodId) {
+    this.currentlyAdding = true;
+    this.inspectedProduct = this.allProducts.filter(prod => prod._id === prodId)[0]
+
+    debugger;
+  }
 
   ngOnInit() {
     this.shopService.getCategories().subscribe(categoryData => {

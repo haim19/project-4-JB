@@ -39,3 +39,23 @@ nav {
     border: 2px solid;
     margin-bottom: 10px;
 }
+.noMatch{
+        background: white;
+        padding: 10px;
+        border: 2px solid;
+    
+}
+.addition{
+background: white;
+display: flex;
+flex-direction: column;
+align-items: center;
+background: linear-gradient(90deg, transparent 25%, white 50%, transparent 100%);
+
+}
+.imgAddition{
+    max-width: 30%;
+}
+.btnCont {
+    display: flex;
+}

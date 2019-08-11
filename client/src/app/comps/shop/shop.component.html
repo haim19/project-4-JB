@@ -1,20 +1,39 @@
 <div class="shopCont">
     <div class="sideBar">
-        <input type="text" [(ngModel)]='searchProduct'/>
+        <input type="text" [(ngModel)]='searchProduct' />
         <button (click)='searchProd()'>Search Product </button>
 
     </div>
-    <div class="view">
+    <div class="view" *ngIf='!currentlyAdding'>
         <nav>
             <button class="categoryBtn" *ngFor='let cate of allCategories'
                 (click)='showCategory(cate._id)'>{{cate.category}} </button>
         </nav>
         <div class="prodCont">
+            <p class='noMatch' *ngIf='allProducts?.length==0'>no matches found</p>
             <div *ngFor='let product of allProducts' class="product">
                 <h3>{{product.title}}</h3>
                 <img [src]='product.url' alt="product.title" class="shopImg" />
                 <p>price: {{product.price | currency:'ILS'}}</p>
+                <button (click)='addProduct(product._id)'> Add</button>
             </div>
         </div>
+
     </div>
+    <div class="view addition" *ngIf='currentlyAdding'>
+        <h3>{{inspectedProduct.title}}</h3>
+        <img [src]='inspectedProduct.url' alt="inspectedProduct.title" class='imgAddition' />
+        <p>price: {{inspectedProduct.price | currency:'ILS'}}</p>
+        <p>Amount: {{amountOfInspected}}</p>
+        <div class="btnCont">
+            <button>-</button>
+            <p>Total: {{amountOfInspected*inspectedProduct.price | currency:'ILS'}}</p>
+            <button>+</button>
+            <button>Cancel</button>
+            <button>Add</button>
+
+        </div>
+
+    </div>
+
 </div>
