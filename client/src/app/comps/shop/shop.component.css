@@ -1,0 +1,41 @@
+.shopImg{
+width:100px;
+}
+
+.product{
+background-color: white;
+width: fit-content;
+padding: 10px;
+text-align: center;
+border-radius: 5px;
+}
+
+.prodCont {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.shopCont {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.sideBar {
+    flex-basis: 25%;
+    background: white;
+    height: 97vh;
+}
+.view {
+    flex-basis: 75%;
+}
+nav {
+    display: flex;
+    justify-content: space-evenly;
+}
+.categoryBtn {
+    flex-basis: 24%;
+    cursor: pointer;
+    background: white;
+    border: 2px solid;
+    margin-bottom: 10px;
+}

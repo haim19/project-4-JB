@@ -1,0 +1,20 @@
+<div class="shopCont">
+    <div class="sideBar">
+        <input type="text" [(ngModel)]='searchProduct'/>
+        <button (click)='searchProd()'>Search Product </button>
+
+    </div>
+    <div class="view">
+        <nav>
+            <button class="categoryBtn" *ngFor='let cate of allCategories'
+                (click)='showCategory(cate._id)'>{{cate.category}} </button>
+        </nav>
+        <div class="prodCont">
+            <div *ngFor='let product of allProducts' class="product">
+                <h3>{{product.title}}</h3>
+                <img [src]='product.url' alt="product.title" class="shopImg" />
+                <p>price: {{product.price | currency:'ILS'}}</p>
+            </div>
+        </div>
+    </div>
+</div>

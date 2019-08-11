@@ -1,0 +1,31 @@
+.homeCont {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.pannel {
+    border: 1px solid;
+    text-align: center;
+    flex-basis: 30%;
+    background-color: beige;
+    border-radius: 110px/39px;
+    padding: 10px;
+}
+
+.shopBtn{
+    outline: none;
+    padding: 10px;
+    background: aliceblue;
+    border: 2px outset lightblue;
+    border-radius: inherit;
+    font-family: fantasy;
+    cursor: pointer;
+    }
+    .shopBtn:hover{
+        border: 2px inset lightblue;
+        text-decoration: underline;
+    }
+    .shopBtn:active{
+        background: dodgerblue; 
+    }
