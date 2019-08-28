@@ -24,9 +24,14 @@ border-radius: 5px;
     flex-basis: 25%;
     background: white;
     height: 97vh;
+    overflow-y: auto;
+    text-align: center;
+    transition: flex-basis 500ms;
 }
 .view {
     flex-basis: 75%;
+    transition: flex-basis 500ms;
+
 }
 nav {
     display: flex;
@@ -58,4 +63,23 @@ background: linear-gradient(90deg, transparent 25%, white 50%, transparent 100%)
 }
 .btnCont {
     display: flex;
+}
+
+button.deleteBtn {
+    position: relative;
+    left: 85px;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    top: -69px;
+}
+button.deleteBtn:hover {
+    color:red;
+}
+.productsForDisplay {
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+    align-items: center;
 }

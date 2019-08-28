@@ -1,0 +1,36 @@
+<div class="orderCont">
+    <div class="sideBar">
+        <input type="text" name="searchText" [(ngModel)]="searchText" placeholder="search" autocomplete="off" />
+        <div><button class="backBtn" (click)="BackToShop()">Back to shopping</button></div>
+        <div class="productsForDisplay" *ngFor="let prod of userProducts">
+            <h3 ngxTextHighlight [content]="prod.title" [searchTerm]="searchText" [caseSensitive]="false">{{searchText}}
+            </h3>
+            <img class='cartImgs' src={{prod.url}} alt={{prod.title}}>
+            <h5>Amount: x{{prod.amount}} </h5>
+            <h5>Price: {{prod.totalPrice | currency :"ILS"}}</h5>
+        </div>
+        <h4>Total price: {{totalPrice | currency :"ILS"}} </h4>
+    </div>
+    <div class="view">
+        <div class="view frm" *ngIf='!orderCompleted'>
+            <input class="inputField" type="text" placeholder="city" name="city" [(ngModel)]="city"
+                (dblclick)='autoFiller($event)'>
+            <input class="inputField" type="text" placeholder="street" name="street" [(ngModel)]="street"
+                (dblclick)='autoFiller($event)'>
+            <input class="inputField" type="date" [(ngModel)]="date">
+            <input type="number" class="inputField" [(ngModel)]="creditCard" autocomplete="off"
+                (input)="creditCardValidation()"
+                [ngStyle]="isCreditCardValid ? {'background':'lightgreen'} : {'background':'lightpink'} "
+                placeholder="Credit card" min="0">
+            <button (click)="completeOrder()"> Order</button>
+            <br/>
+            <p class="err"> {{errorMsg}}</p>
+        </div>
+        <div class="successfulOrder" *ngIf="orderCompleted">
+            <p>Your order is completed!</p>
+            To dowenload Receipt click <span class="clkHere">Here</span>
+            <br/> <br/>
+            <button [routerLink]="['/']">OK</button>
+        </div>
+    </div>
+</div>

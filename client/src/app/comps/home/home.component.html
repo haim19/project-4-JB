@@ -2,50 +2,52 @@
 
     <div class="pannel A">
         <div class="notLogged" *ngIf='!user'>
-        <form [formGroup]='loginForm' *ngIf='alreadyRegistered' (ngSubmit)='loginSubmit()'>
-            <label> Email: <input (input)='emailPassError=null' formControlName='email' /> </label>
-            <label> password: <input (input)='emailPassError=null' formControlName='password' /> </label>
-            <p style='color:red' *ngIf='emailPassError'>{{emailPassError}} </p>
-            <button> submit</button>
-        </form>
+            <form [formGroup]='loginForm' *ngIf='alreadyRegistered' (ngSubmit)='loginSubmit()'>
+                <label> Email: <input (input)='emailPassError=null' formControlName='email' /> </label>
+                <label> password: <input (input)='emailPassError=null' formControlName='password' /> </label>
+                <p style='color:red' *ngIf='emailPassError'>{{emailPassError}} </p>
+                <button> submit</button>
+            </form>
 
-        <form [formGroup]='registerForm_step1' *ngIf='!alreadyRegistered && !step2' (ngSubmit)='regSubmit()'>
-            <label> Email: <input formControlName='email' (input)='wrongEmail=null && submitted=false' /> </label>
-            <p style='color:red' *ngIf='getLog.email.errors?.email'>email not valid </p>
-            <p style='color:red' *ngIf='wrongEmail'>{{wrongEmail}} </p>
-            <p style='color:red' *ngIf='getLog.email.errors?.required && submitted'>email is required </p>
-            <label> your ID: <input (input)='wrongId=null && submitted=false' formControlName='clientId' /> </label>
-            <p style='color:red' *ngIf='wrongId'>{{wrongId}} </p>
-            <p style='color:red' *ngIf='getLog.clientId.errors?.required && submitted'>ID is required </p>
-            <label> Choose password: <input formControlName='choosePassword' (input)='submitted=false' /> </label>
-            <p style='color:red' *ngIf='getLog.choosePassword.errors?.required && submitted'>password is required </p>
-            <label> Confirm password: <input formControlName='confirmPassword' (input)='submitted=false' /> </label>
-            <p style='color:red' *ngIf='getLog.confirmPassword.errors?.required && submitted'> confirmation is required
-            </p>
-            <p style='color:red' *ngIf='getLog.choosePassword.value !== getLog.confirmPassword.value  && submitted'>
-                passwords
-                do not match! </p>
-            <button> submit</button>
-        </form>
+            <form [formGroup]='registerForm_step1' *ngIf='!alreadyRegistered && !step2' (ngSubmit)='regSubmit()'>
+                <label> Email: <input formControlName='email' (input)='wrongEmail=null && submitted=false' /> </label>
+                <p style='color:red' *ngIf='getLog.email.errors?.email'>email not valid </p>
+                <p style='color:red' *ngIf='wrongEmail'>{{wrongEmail}} </p>
+                <p style='color:red' *ngIf='getLog.email.errors?.required && submitted'>email is required </p>
+                <label> your ID: <input (input)='wrongId=null && submitted=false' formControlName='clientId' /> </label>
+                <p style='color:red' *ngIf='wrongId'>{{wrongId}} </p>
+                <p style='color:red' *ngIf='getLog.clientId.errors?.required && submitted'>ID is required </p>
+                <label> Choose password: <input formControlName='choosePassword' (input)='submitted=false' /> </label>
+                <p style='color:red' *ngIf='getLog.choosePassword.errors?.required && submitted'>password is required
+                </p>
+                <label> Confirm password: <input formControlName='confirmPassword' (input)='submitted=false' /> </label>
+                <p style='color:red' *ngIf='getLog.confirmPassword.errors?.required && submitted'> confirmation is
+                    required
+                </p>
+                <p style='color:red' *ngIf='getLog.choosePassword.value !== getLog.confirmPassword.value  && submitted'>
+                    passwords
+                    do not match! </p>
+                <button> submit</button>
+            </form>
 
-        <form [formGroup]='registerForm_step2' *ngIf='!alreadyRegistered && step2' (ngSubmit)='regSubmit()'>
-            <label> Name: <input formControlName='name' (input)='submitted=false' /> </label>
-            <p style='color:red' *ngIf='getLog2.name.errors?.required && submitted'>Name is required</p>
-            <label> LastName: <input formControlName='lastName' (input)='submitted=false' /> </label>
-            <p style='color:red' *ngIf='getLog2.lastName.errors?.required && submitted'>Lastname is required</p>
-            <label> City: <select formControlName='city'>
-                    <option *ngFor='let city of cities' [value]='city'>{{city}}</option>
-                </select> </label>
-            <label> street: <input formControlName='street' (input)='submitted=false' /> </label>
-            <p style='color:red' *ngIf='getLog2.street.errors?.required && submitted'>Street is required</p>
-            <button>submit</button>
-        </form>
+            <form [formGroup]='registerForm_step2' *ngIf='!alreadyRegistered && step2' (ngSubmit)='regSubmit()'>
+                <label> Name: <input formControlName='name' (input)='submitted=false' /> </label>
+                <p style='color:red' *ngIf='getLog2.name.errors?.required && submitted'>Name is required</p>
+                <label> LastName: <input formControlName='lastName' (input)='submitted=false' /> </label>
+                <p style='color:red' *ngIf='getLog2.lastName.errors?.required && submitted'>Lastname is required</p>
+                <label> City: <select formControlName='city'>
+                        <option *ngFor='let city of cities' [value]='city'>{{city}}</option>
+                    </select> </label>
+                <label> street: <input formControlName='street' (input)='submitted=false' /> </label>
+                <p style='color:red' *ngIf='getLog2.street.errors?.required && submitted'>Street is required</p>
+                <button>submit</button>
+            </form>
 
-        <button [innerHTML]='alreadyRegistered ? "Create an account" : "I already have an accoount"'
-            (click)='alreadyRegistered=!alreadyRegistered'></button>
+            <button [innerHTML]='alreadyRegistered ? "Create an account" : "I already have an accoount"'
+                (click)='alreadyRegistered=!alreadyRegistered'></button>
         </div>
         <div class="logged" *ngIf='user'>
-            welcome {{user.name}}! <br/>
+            welcome {{user.name}}! <br />
             you are now logged in.
         </div>
     </div>
@@ -56,7 +58,10 @@
         <img src="../../../assets/pic2.png" alt="picture" />
     </div>
     <div class="pannel C">
-        <button class="shopBtn" *ngIf="user" (click)='enterShop()'>Start shopping</button>
-
+        <button class="shopBtn" *ngIf="user" (click)='enterShop()'
+            [innerHTML]='cartIsOpen ? "Continue shopping" : "Start shopping" '></button>
+        <p>Total products in store: {{products?.length}}</p>
+        <p *ngIf='cartIsOpen'>You have an open cart from {{cartIsOpen.creationDate | date}} </p>
+        <p *ngIf='ordersExist'> Your last order is from {{lastDate.toString() | date :"medium" }}</p>
     </div>
 </div>

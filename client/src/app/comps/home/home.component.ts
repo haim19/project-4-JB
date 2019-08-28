@@ -19,8 +19,12 @@ export class HomeComponent implements OnInit {
   emailPassError: string;
   step2: boolean = false;
   alreadyRegistered: boolean = true;
+  products: any;
+  cartIsOpen: any;
+  ordersExist: boolean = false;
+  lastDate: number | Date = 0;
 
-  constructor(private shopService: ShopService,private router:Router) { }
+  constructor(private shopService: ShopService, private router: Router) { }
   loginForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required]),
     password: new FormControl(null, [Validators.required])
@@ -47,7 +51,10 @@ export class HomeComponent implements OnInit {
         }
         else {
           this.user = data;
-          debugger;
+          if (this.user.role === "admin") {
+            return this.enterShop()
+          }
+          this.openCart();
         }
       })
     }
@@ -84,24 +91,55 @@ export class HomeComponent implements OnInit {
 
     else {
       this.shopService.register({ form1: this.getLog, form2: this.getLog2 }).subscribe(data => {
-        debugger;
+
         this.user = data;
       })
     }
-
-
   }
-  enterShop(){
+  countProducts() {
+    this.shopService.getProducts().subscribe(data => {
+      this.products = data;
+    })
+  }
 
+  enterShop() {
+    this.shopService.assignUser(this.user);
     this.router.navigate(['/shop']);
   }
 
+  openCart() {
+    let allDates = [];
+    this.shopService.searchCart(this.user._id).subscribe(data => {
+      this.cartIsOpen = data;
+    })
+    this.shopService.searchOrder(this.user._id).subscribe(data => {
+      if (data) {
+        this.ordersExist = true;
+        data.map(date => date.generated).forEach(eachDate => allDates.push(new Date(eachDate)))
+        for (var i = 0; i < allDates.length; i++) {
+          if (allDates[i] > this.lastDate) {
+            this.lastDate = allDates[i];
+          }
+        }
+      }
+    })
+  }
+
+
+
   ngOnInit() {
 
+    this.countProducts();
     this.registerForm_step2.controls.city.setValue(this.cities[0]);
     this.shopService.checkSession().subscribe(data => {
       if (data.user) {
         this.user = data.user;
+        if (this.user.role === "admin") {
+        this.shopService.assignUser(data.user);
+        return this.enterShop()
+        }
+        this.openCart();
+        this.shopService.assignUser(data.user);
       }
     })
   }

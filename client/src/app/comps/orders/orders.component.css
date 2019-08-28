@@ -1,0 +1,42 @@
+.sideBar {
+    background: white;
+    height: -webkit-fill-available;
+    width: 25%;
+    text-align: center;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.backBtn{
+    margin: 10px;
+}
+.orderCont {
+    display: flex;
+    justify-content: space-evenly;
+}
+.view {
+    display: flex;
+    flex-direction: column;
+    background: rgba(0,0,0,0.6);
+    padding: 10px;
+    height: fit-content;
+}
+.inputField {
+    margin:10px;
+}
+ .successfulOrder{
+    color:white;
+    text-align: center;
+}
+.err{
+    color:red;
+}
+.clkHere{
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 500ms;    
+}
+.clkHere:hover{
+    color:yellow;
+} 
