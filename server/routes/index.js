@@ -239,13 +239,13 @@ router.post('/checkid', async (req, res) => {
 
 router.put('/product', function (req, res) {
 
-  ProductModel.findByIdAndUpdate({ _id:req.body.prodId },
+  ProductModel.findByIdAndUpdate({ _id: req.body.prodId },
     {
       $set: {
-        title:req.body.title,
-        url:req.body.url,
-        price:req.body.price,
-        categoryType:req.body.categoryType
+        title: req.body.title,
+        url: req.body.url,
+        price: req.body.price,
+        categoryType: req.body.categoryType
       }
     },
     {
@@ -256,6 +256,20 @@ router.put('/product', function (req, res) {
       res.json(updatedDoc);
     }
   )
+})
+
+router.post('/product', function (req, res) {
+  productModel = new ProductModel({
+    title:req.body.title,
+    categoryType:req.body.categoryType,
+    url:req.body.url,
+    price:req.body.price
+  })
+  productModel.save((err, doc) => {
+    if (err) throw err;
+    res.json(doc);
+
+  })
 })
 
 module.exports = router;

@@ -165,5 +165,14 @@ export class ShopService {
     }, httpOptions)
   }
 
-}
+  addProduct(ev): Observable<any> {
 
+    return this.http.post('/product', {
+      title: ev.title,
+      categoryType: ev.categoryType,
+      url: ev.url,
+      price: ev.price
+    }, httpOptions);
+  }
+
+}

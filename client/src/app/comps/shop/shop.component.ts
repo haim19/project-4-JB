@@ -8,16 +8,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent implements OnInit {
-  
-  
+
+
   constructor(private shopService: ShopService, private router: Router) { }
-  
+
   title: string;
   categoryType: string;
   url: string;
   price: number;
   prodType: string;
-  currentlyEditing: boolean =false;
+  currentlyEditing: boolean = false;
   sideBarConceled: boolean = false;
   totalPrice: number = 0;
   userProducts: any;
@@ -47,12 +47,22 @@ export class ShopComponent implements OnInit {
     this.currentlyAdding = true;
     this.inspectedProduct = this.allProducts.filter(prod => prod._id === prodId)[0]
   }
-  editProduct(prodId,prodPrice) {
+  editProduct(prodId, prodPrice) {
     this.currentlyEditing = true;
     this.inspectedProduct = this.allProducts.filter(prod => prod._id === prodId)[0]
-    this.inspectedProduct['price']=prodPrice;
+    this.inspectedProduct['price'] = prodPrice;
+    this.title = this.inspectedProduct.title;
+    this.price = this.inspectedProduct.price;
+    this.url = this.inspectedProduct.url;
+    this.prodType = this.inspectedProduct.categoryType;
   }
-  inspectProdAsAdmin(){
+  CancelEditing() {
+    this.currentlyEditing = false;
+    this.userProducts = [];
+  }
+
+  inspectProdAsAdmin() {
+    this.userProducts = [];
     this.userProducts.push(this.inspectedProduct)
   }
 
@@ -122,15 +132,35 @@ export class ShopComponent implements OnInit {
       this.userProducts = userProducts;
     })
   }
-  saveEdit(){
-    this.shopService.adminEditProduct({
-      prodId:this.inspectedProduct._id,
-      title:this.title,
-      categoryType:this.categoryType,
-      url:this.url,
-      price:this.price
-    }).subscribe()
-   }
+  saveEdit() {
+    if (this.currentlyEditing) {
+      this.shopService.adminEditProduct({
+        prodId: this.inspectedProduct._id,
+        title: this.title,
+        categoryType: this.prodType,
+        url: this.url,
+        price: this.price
+      }).subscribe(() => {
+        this.showCategory(this.prodType);
+        this.CancelEditing();
+      })
+    }
+    else {
+      this.saveNewProduct()
+    }
+  }
+
+  saveNewProduct() {
+    this.shopService.addProduct({
+      title: this.title,
+      categoryType: this.prodType,
+      url: this.url,
+      price: this.price
+    }).subscribe((prod)=>{
+      this.showCategory(prod.categoryType)
+      this.CancelEditing();
+    })
+  }
 
   addAndSubtract(ev) {
     let method: string = ev.target.innerHTML;
@@ -142,18 +172,34 @@ export class ShopComponent implements OnInit {
 
     }
   }
+  addNewProdcut() {
+    this.currentlyEditing = false;
+    this.title = "";
+    this.price = null;
+    this.url = "";
+    this.categoryType = "";
+    this.inspectedProduct = {};
+    this.inspectedProduct['title'] = this.title;
+    this.inspectedProduct['price'] = this.price;
+    this.inspectedProduct['url'] = this.url;
+    this.inspectedProduct['categoryType'] = this.categoryType;
+    this.inspectProdAsAdmin();
+  }
+
 
   toggleSideBar(sideBar, view) {
     if (!this.sideBarConceled) {
       this.sideBarConceled = true;
       sideBar.style.flexBasis = '0%';
-      view.style.flexBasis = '100%';
+      // view.style.flexBasis = '100%';
+      document.getElementById("view").style.flexBasis = '100%';
       sideBar.style.width = 0;
     }
     else {
       this.sideBarConceled = false;
       sideBar.style.flexBasis = '25%';
-      view.style.flexBasis = '75%';
+      // view.style.flexBasis = '75%';
+      document.getElementById("view").style.flexBasis = '75%';
     }
   }
 

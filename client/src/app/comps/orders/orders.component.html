@@ -23,13 +23,13 @@
                 [ngStyle]="isCreditCardValid ? {'background':'lightgreen'} : {'background':'lightpink'} "
                 placeholder="Credit card" min="0">
             <button (click)="completeOrder()"> Order</button>
-            <br/>
+            <br />
             <p class="err"> {{errorMsg}}</p>
         </div>
         <div class="successfulOrder" *ngIf="orderCompleted">
             <p>Your order is completed!</p>
             To dowenload Receipt click <span class="clkHere">Here</span>
-            <br/> <br/>
+            <br /> <br />
             <button [routerLink]="['/']">OK</button>
         </div>
     </div>

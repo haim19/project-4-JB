@@ -2,29 +2,36 @@
     <div class="sideBar" #sideBar>
         <input type="text" [(ngModel)]='searchProduct' />
         <button (click)='searchProd()'>Search Product </button>
+        <button *ngIf='user?.role==="admin"' class="btnAdd" (click)='addNewProdcut()'>+</button>
         <div class="productsForDisplay" *ngFor='let prod of userProducts'>
-            <h3 *ngIf='user.role==="user"' >{{prod.title}}</h3>
-            <label *ngIf='user.role==="admin"' >Title: <input [(ngModel)]='title' [value]='prod.title' type="text"></label>
-            <button class='deleteBtn' *ngIf='user.role==="user"' (click)='deleteProduct(prod._id, prod.cartId, prod.totalPrice)'>X </button>
+            <h3 *ngIf='user.role==="user"'>{{prod.title}}</h3>
+            <label *ngIf='user.role==="admin"'>Title: <input [(ngModel)]='title' type="text"></label>
+            <button class='deleteBtn' *ngIf='user.role==="user"'
+                (click)='deleteProduct(prod._id, prod.cartId, prod.totalPrice)'>X </button>
             <img class='cartImgs' src={{prod.url}} alt={{prod.title}}>
             <h5 *ngIf='user.role==="user"'>Amount: x{{prod.amount}} </h5>
             <h5 *ngIf='user.role==="user"'>Price: {{prod.totalPrice | currency :"ILS"}}</h5>
-            <label *ngIf='user.role==="admin"'>Price: <input [(ngModel)]='price' [value]='prod.price' type="text"></label>
-            <label *ngIf='user.role==="admin"'>URL: <input [(ngModel)]='url' [value]='prod.url' type="text"></label>
-            <select *ngIf='user.role==="admin"' [(ngModel)]='prodType' >
-                <option *ngFor="let cat of allCategories" [value]='cat._id'>{{cat.category}}</option>
-            </select>
-            <button *ngIf='user.role==="admin"' (click)='saveEdit()' >Save</button>
+            <label *ngIf='user.role==="admin"'>Price:
+                <input [(ngModel)]="price" [value]="prod.price" type="number">
+            </label>
+            <label *ngIf='user.role==="admin"'>URL:
+                <input [(ngModel)]="url" type="text"></label>
+            <label>Type: <select *ngIf='user.role==="admin"' [(ngModel)]='prodType'>
+                    <option *ngFor="let cat of allCategories" [value]='cat._id'>{{cat.category}}</option>
+                </select> </label>
+            <button *ngIf='user.role==="admin"' (click)='saveEdit()'>Save</button>
+            <button (click)='CancelEditing()'>Cancel</button>
 
         </div>
         <p *ngIf='user?.role==="user"'>Total price: {{totalPrice | currency :"ILS"}}</p>
         <button *ngIf='userProducts?.length && user.role==="user"' (click)='deleteAll()'>Delete all</button>
-        <div> <button *ngIf='userProducts?.length && user.role==="user"' (click)='naviagteToOrders()'>Order</button></div>
+        <div> <button *ngIf='userProducts?.length && user.role==="user"' (click)='naviagteToOrders()'>Order</button>
+        </div>
     </div>
-    <div class="view" *ngIf='!(currentlyAdding || currentlyEditing)' #view>
+    <button class='btnSideBar' (click)='toggleSideBar(sideBar,view)'
+        [innerHTML]='sideBarConceled ? "&#8594;" : "&#8592;"'> </button>
+    <div id="view" class="view" *ngIf='!(currentlyAdding || currentlyEditing)' #view>
         <nav>
-            <button class='btnSideBar' (click)='toggleSideBar(sideBar,view)'
-                [innerHTML]='sideBarConceled ? "&#8594;" : "&#8592;"'> </button>
             <button class="categoryBtn" *ngFor='let cate of allCategories'
                 (click)='showCategory(cate._id)'>{{cate.category}} </button>
         </nav>
@@ -36,11 +43,12 @@
                 <p>price: {{product.price | currency:'ILS'}}</p>
                 <button *ngIf='user.role==="user"' (click)='addProduct(product._id)'> Add</button>
                 <button *ngIf='user.role==="admin"' (click)='editProduct(product._id, product.price)'> Edit</button>
+
             </div>
         </div>
 
     </div>
-    <div class="view addition" *ngIf='currentlyAdding || currentlyEditing' #view>
+    <div id="view" class="view addition" *ngIf='(currentlyAdding || currentlyEditing) && inspectedProduct._id' #view>
         <h3>{{inspectedProduct.title}}</h3>
         <img [src]='inspectedProduct.url' alt="inspectedProduct.title" class='imgAddition' />
         <p>price: {{inspectedProduct.price | currency:'ILS'}}</p>
@@ -54,6 +62,7 @@
 
         </div>
         <button *ngIf='currentlyEditing' (click)='inspectProdAsAdmin()'>Edit</button>
+        <button (click)='CancelEditing()'>Cancel</button>
 
     </div>
 
