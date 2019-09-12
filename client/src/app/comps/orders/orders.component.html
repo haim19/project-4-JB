@@ -28,7 +28,7 @@
         </div>
         <div class="successfulOrder" *ngIf="orderCompleted">
             <p>Your order is completed!</p>
-            To dowenload Receipt click <span class="clkHere">Here</span>
+            To dowenload Receipt click <span class="clkHere" (click)="dowenloading()">Here</span>
             <br /> <br />
             <button [routerLink]="['/']">OK</button>
         </div>

@@ -164,6 +164,9 @@ export class ShopService {
       card: ev.card
     }, httpOptions)
   }
+  dowanloadProducts() :Observable<any> {
+    return this.http.get("/cart_products/"+this.cartId);
+  }
 
   addProduct(ev): Observable<any> {
 

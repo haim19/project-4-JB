@@ -25,9 +25,7 @@ export class OrdersComponent implements OnInit {
   currentDate: Date = new Date();
   cartId: string;
 
-
   constructor(private shopService: ShopService, private router: Router) { }
-
 
   BackToShop() {
     return this.router.navigate(['/shop']);
@@ -76,7 +74,6 @@ export class OrdersComponent implements OnInit {
     else {
       this.isCreditCardValid = false;
     }
-
   }
   completeOrder() {
     var newDate = new Date(this.date + "Z")
@@ -103,7 +100,7 @@ export class OrdersComponent implements OnInit {
 
     this.shopService.order({
       customerId: this.user._id,
-      cartId: this.cartId,
+      cartId: this.shopService.cartId,
       finalPrice: this.totalPrice,
       scheduled: this.date,
       city: this.city,
@@ -113,7 +110,7 @@ export class OrdersComponent implements OnInit {
     }).subscribe(data => {
       if (data) {
         this.shopService.lockCartProd({
-          cartId: this.cartId,
+          cartId: this.shopService.cartId,
           generated: this.currentDate
         }).subscribe(() => {
           this.shopService.lockCart({ generated: this.currentDate }).subscribe(() => {
@@ -122,6 +119,12 @@ export class OrdersComponent implements OnInit {
         })
       }
     })
+  }
+  dowenloading(){
+    this.shopService.dowanloadProducts().subscribe(()=>{
+
+    });
+
   }
 
   ngOnInit() {
